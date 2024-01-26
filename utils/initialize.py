@@ -1,4 +1,5 @@
 import os
+import datetime
 import logging
 import yaml
 from box import Box
@@ -30,6 +31,7 @@ def load_config(config_main_path: str = '../config/') -> Box:
 
 config = load_config()
 
+
 def load_logging(logging_main_path: 'str' = '../logs/') -> None:
     """
     Setup logging systems accessible for entire project
@@ -42,8 +44,17 @@ def load_logging(logging_main_path: 'str' = '../logs/') -> None:
         filename=log_full_path,
         filemode='w',
         encoding='utf-8',
-        format='%(asctime)s %(message)s',
-        level=logging.INFO)
+        format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
+        level=logging.INFO,
+        force=True,
+    )
+    stream_handle = logging.StreamHandler()
+    stream_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    stream_handle.setFormatter(stream_format)
+    logging.getLogger().addHandler(stream_handle)
+
     logging.info('==='*15)
+    logging.info(f'*** Vizsearch Log : *** {datetime.datetime.now()}')
+    logging.info('===' * 15)
 
     return None
