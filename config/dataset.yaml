@@ -1,3 +1,8 @@
-## Dataset Configuration Variables
+# Dataset Configuration Variables
 
-AWS_S3_Bucket: 'https://aws/s3/cats-and-dogs/'
+# AWS S3 Dataset
+AWS_S3_Bucket: 'vizsearchdataset'
+#AWS_S3_Dataset: 'dogs-vs-cats.zip'
+#AWS_S3_Dataset: 'jd_dataset_demo_v4.xlsx'
+AWS_S3_Dataset: 'jd_dataset_demo_v45.xlsx'
+dataset_savepath: '../docker/jd_dataset_demo_v4_fromS3.xlsx'

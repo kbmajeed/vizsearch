@@ -1,16 +1,14 @@
 import os
 import logging
-
 import yaml
-
 from box import Box
 
 
-def setup_config_files(config_main_path: str = '../config/') -> Box:
+def load_config(config_main_path: str = '../config/') -> Box:
     """
     Create all the configuration files and make available throughout project
-    :param config_main_path:
-    :return: Box object
+    :param config_main_path: directory containing config files
+    :return: Box object containing config variables
     """
 
     config_files = os.listdir(config_main_path)
@@ -30,8 +28,9 @@ def setup_config_files(config_main_path: str = '../config/') -> Box:
 
     return config
 
+config = load_config()
 
-def setup_logging(logging_main_path: 'str' = '../logs/') -> None:
+def load_logging(logging_main_path: 'str' = '../logs/') -> None:
     """
     Setup logging systems accessible for entire project
     :param logging_main_path:
@@ -39,20 +38,12 @@ def setup_logging(logging_main_path: 'str' = '../logs/') -> None:
     """
 
     log_full_path = os.path.join(logging_main_path, 'vizsearch.log')
-    if not os.path.exists(log_full_path):
-        logging.basicConfig(
-            filename=log_full_path,
-            filemode='w',
-            encoding='utf-8',
-            format='%(asctime)s %(message)s',
-            level=logging.INFO)
-        logging.info('==='*15)
-    else:
-        pass
+    logging.basicConfig(
+        filename=log_full_path,
+        filemode='w',
+        encoding='utf-8',
+        format='%(asctime)s %(message)s',
+        level=logging.INFO)
+    logging.info('==='*15)
 
     return None
-
-
-if __name__ == '__main__':
-    config_dir = '../config/'
-    config = setup_config_files(config_dir)
