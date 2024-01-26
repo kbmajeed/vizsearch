@@ -1,0 +1,3 @@
+## Dataset Configuration Variables
+
+AWS_S3_Bucket: 'https://aws/s3/cats-and-dogs/'
