@@ -1,0 +1,32 @@
+cat_dogs_dataset = CatsDogsDataset(config.dataset.dataset_path, None)
+
+# dataset_loader = torch.utils.data.DataLoader(cat_dogs_dataset,
+#                                              batch_size=4, shuffle=True,
+#                                              num_workers=4)
+#DataLoader
+print(0)
+
+
+def renormalize(tensor):
+    minFrom = tensor.min()
+    maxFrom = tensor.max()
+    # minTo = 0
+    # maxTo = 1
+    minTo = 0
+    maxTo = 1
+    return minTo + (maxTo - minTo) * ((tensor - minFrom) / (maxFrom - minFrom))
+
+for i, sample in enumerate(cat_dogs_dataset):
+    print(i, sample[0])
+    cc = sample[0].permute(1, 2, 0).numpy()
+    if img_transforms is not None:
+        cc = renormalize(cc)
+    plt.imshow(cc)
+    plt.show()
+
+    if i == 3:
+        break
+
+
+-- view approach
+tensor([124.5226, 116.0461, 106.3240])

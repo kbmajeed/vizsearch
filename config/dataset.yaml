@@ -5,3 +5,5 @@ AWS_S3_Bucket: 'vizsearchdataset'
 #AWS_S3_Dataset: 'dogs-vs-cats.zip'
 AWS_S3_Dataset: 'jd_dataset_demo_v4.xlsx'
 dataset_savepath: '../data/jd_dataset_demo_v4_fromS3.xlsx'
+
+dataset_path: '../data/raw_data/dogs-vs-cats/train'

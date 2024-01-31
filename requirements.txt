@@ -2,23 +2,26 @@
 # Install by running: pip install -r requirements.txt
 
 
-### Maths
+### Compute
 numpy==1.26.3
 pandas==2.2.0
 scipy==1.12.0
 
-### Visuals
+### Vision
+scikit-image==0.22.0
 matplotlib==3.8.2
 streamlit==1.30.0
 opencv-python==4.9.0.80
 
-### VectorDB
+### Database
 pgvector==0.2.4
 psycopg2==2.9.9
 pinecone-client==3.0.2
 
 ### Modeling
 scikit-learn==1.4.0
+#keras==3.0.4
+tensorflow==2.15.0
 torch==2.1.2
 torchvision==0.16.2
 

@@ -4,3 +4,26 @@ Visual search engine is a practical implementation of an image retrieval system 
 ## Setup
 ### Local Installation
 1. Install Postgres, Pgvector
+
+Tool Usage So far:
+
+PgAdmin
+PostgresSQL
+Pgvector
+
+Yaml
+DotEnv
+
+AWS IAM
+AWS S3
+
+Boto3
+
+Pip
+
+Box
+Datetime
+
+Pycharm
+Logging
+Config
