@@ -58,14 +58,11 @@ def train(n_epochs, optimizer, model, loss_fn, train_loader):
     pass
 
 
-
-
 # train(n_epochs=100,
 #       optimizer=optimizer,
 #       model=model,
 #       loss_fn=loss_fn,
 #       train_loader=dataset_loader)
-
 
 
 if __name__ == '__main__':

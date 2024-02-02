@@ -45,18 +45,18 @@ def load_logging(logging_main_path: 'str' = '../logs/') -> None:
         filename=log_full_path,
         filemode='w',
         encoding='utf-8',
-        format="%(asctime)s - %(levelname)s - [%(filename)s: %(funcName)33s(): %(lineno)s]  -  %(message)s",
+        format="%(asctime)s - %(levelname)s - [%(filename)s: %(funcName)22s(): %(lineno)s]  -  %(message)s",
         level=logging.INFO,
         force=True,
     )
     stream_handle = logging.StreamHandler()
     stream_format = logging.Formatter(
-        "%(asctime)s - %(levelname)s - [%(filename)s: %(funcName)33s(): %(lineno)s]  -  %(message)s")
+        "%(asctime)s - %(levelname)s - [%(filename)s: %(funcName)22s(): %(lineno)s]  -  %(message)s")
     stream_handle.setFormatter(stream_format)
     logging.getLogger().addHandler(stream_handle)
 
-    logging.info('==='*33)
+    logging.info('==='*22)
     logging.info(f'*** Vizsearch Log *** | {datetime.datetime.now()}')
-    logging.info('==='*33)
+    logging.info('==='*22)
 
     return None

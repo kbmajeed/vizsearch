@@ -3,6 +3,9 @@ import math
 import logging
 import warnings
 
+import numpy as np
+import matplotlib.pyplot as plt
+
 import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
@@ -13,7 +16,6 @@ from utils import initialize
 
 
 # Load config files and env variables
-initialize.load_logging()
 config = initialize.load_config()
 warnings.filterwarnings("ignore")
 
@@ -31,8 +33,6 @@ class CatsDogsDataset(Dataset):
                        (img_listing_i.endswith('.jpg') and
                        ((img_listing_i.rfind('cat') >= 0) or
                         (img_listing_i.rfind('dog') >= 0)))]
-        if size_limit:
-            self.img_listing = img_listing[:size_limit]
 
         self.img_listing = img_listing
 
@@ -71,56 +71,72 @@ def average_dimensions(torch_dataset):
     return avg_width, avg_height
 
 
-def normalizing(torch_dataset):
+def normalize_images(torch_dataset, method=1):
     """
-    TODO: standard normalize image dataset
-    :param torch_dataset:
-    :return:
+    Get the mu and std for normalizing the dataset
+    :param torch_dataset: pytorch dataset
+    :param method: choose method 1 or 2 implementation
+    :return: mean and standard deviation of full dataset
     """
-    num_pixels, mu, std = 0.0, 0.0, 0.0
-    for images, _ in torch_dataset:
-        num_channels, height, width = images.shape
-        num_pixels += height * width
-        mu += images.numpy().mean(axis=(1, 2))
-        std += images.numpy().std(axis=(1, 2))
-        print(f"image i has RGB | : {mu} mean x {std} std")
-    mu /= len(torch_dataset)
-    # returns: array([124.52265245, 116.04606127, 106.32403549])
-    std /= len(torch_dataset)
-    # returns: array([58.01745754, 56.86948742, 56.91937481])
+
+    if method == 1:
+        num_pixels, mu, std = 0.0, 0.0, 0.0
+        for images, _ in torch_dataset:
+            num_channels, height, width = images.shape
+            num_pixels += height * width
+            mu += images.numpy().mean(axis=(1, 2))
+            std += images.numpy().std(axis=(1, 2))
+            print(f"image i has RGB | : {mu} mean x {std} std")
+        mu /= len(torch_dataset)
+        # returns: array([124.52265245, 116.04606127, 106.32403549])
+        std /= len(torch_dataset)
+        # returns: array([58.01745754, 56.86948742, 56.91937481])
+
+    elif method == 2:
+        img_bulk = torch.stack([img_i for img_i, _ in torch_dataset], dim=3)
+        logging.info("Finished building dataset image bulk")
+        mu = img_bulk.type(torch.float32).view(3, -1).mean(dim=1)
+        # returns: tensor([124.5226, 116.0461, 106.3240])
+        std = img_bulk.type(torch.float32).view(3, -1).std(dim=1)
+        # returns: tensor([66.6116, 64.9501, 65.5980])
 
     return mu, std
 
 
-def normalizing2(torch_dataset):
+def tensor_transform(tensor_array, view_img=False):
     """
-    TODO: standard normalize image dataset
-    :param torch_dataset:
-    :return:
+    Utility function to transform (and view) image sample into numpy format
+    :param tensor_array:
+    :return: new array in numpy format
     """
-    img_bulk = torch.stack([img_i for img_i, _ in torch_dataset], dim=3)
-    logging.info("Finished building dataset image bulk")
-    mu = img_bulk.type(torch.float32).view(3, -1).mean(dim=1)
-    # returns: tensor([124.5226, 116.0461, 106.3240])
-    std = img_bulk.type(torch.float32).view(3, -1).std(dim=1)
-    # returns: tensor([66.6116, 64.9501, 65.5980])
-    return mu, std
+    minFrom, maxFrom = tensor_array.min(), tensor_array.max()
+    minTo, maxTo = 0, 1
+    tensor_array = minTo + (maxTo - minTo) * ((tensor_array - minFrom) / (maxFrom - minFrom))
+    img_array = tensor_array.permute(1, 2, 0).numpy()
+    if view_img:
+        plt.imshow(img_array)
+        plt.show()
 
+    return img_array
 
-# cat_dogs_dataset = CatsDogsDataset(config.dataset.dataset_path, transform=transforms.v2.Resize((400, 400)))
-# mu, std = normalizing2(cat_dogs_dataset)
 
 img_transforms = transforms.Compose([
-    transforms.v2.Resize((400, 400)),
-    #transforms.v2.Resize((100, 100)),
+    transforms.v2.Resize((config.etl.image_resize, config.etl.image_resize)),
     transforms.v2.ToDtype(torch.float32, scale=True),
     transforms.v2.ToTensor(),
-    #transforms.v2.Normalize(mu, std)
 ])
 
 cat_dogs_dataset = CatsDogsDataset(config.dataset.dataset_path, transform=img_transforms)
-logging.info("cat_dogs ML dataset created")
+logging.info("cat_dogs image dataset created")
 
-# dataset_loader = torch.utils.data.DataLoader(cat_dogs_dataset, batch_size=4, shuffle=True, num_workers=0)
-# logging.info("cat_dogs ML dataloader created")
-
+# def save_keras_dataset():
+#     pass
+#
+# def get_keras_dataset(dataset=cat_dogs_dataset, use_raw=False):
+#     if use_raw:
+#         train_images = np.array([tensor_transform(img_i) for img_i, _ in dataset])
+#         train_labels = np.array([img_l.numpy().flatten() for _, img_l in dataset])
+#     else:
+#         #load from saved dataset
+#     logging.info('Training images and labels extracted for model fitting')
+#     pass

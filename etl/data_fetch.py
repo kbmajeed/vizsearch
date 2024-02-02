@@ -14,7 +14,6 @@ from utils import initialize
 # Load config files and env variables
 initialize.load_logging()
 config = initialize.load_config()
-dotenv.load_dotenv()
 warnings.filterwarnings("ignore")
 
 
