@@ -1,12 +1,9 @@
-import io
-import os
 import logging
-import zipfile
+import os
 import warnings
 
 import boto3
 import botocore
-import dotenv
 
 from utils import initialize
 

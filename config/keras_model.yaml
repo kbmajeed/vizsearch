@@ -1,4 +1,4 @@
-# Configuration for the ETL and Data transformations
+## ML Modeling Variables
 
 epochs: 15
 batch_size: 64

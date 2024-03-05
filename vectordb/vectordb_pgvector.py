@@ -14,8 +14,10 @@ config = initialize.load_config()
 dotenv.load_dotenv()
 warnings.filterwarnings("ignore")
 
+# Load CNN embedding model
 cat_dogs_embeddings = pickle.load(open('../model/embedding_matrix.emb', 'rb'))
 
+# Connect to Postgres local Pgvector Vector database
 conn = psycopg2.connect(
     database=os.environ['POSTGRES_DB'],
     user=os.environ['POSTGRES_USER'],
@@ -26,7 +28,7 @@ conn = psycopg2.connect(
 
 cursor = conn.cursor()
 
-
+# Execute one-time DDL command
 sql_clear_vectordb_table = "DROP TABLE vizsearch;"
 cursor.execute(sql_clear_vectordb_table)
 
@@ -35,6 +37,7 @@ cursor.execute(sql_create_vectordb_table)
 
 sql_insert_vector_embedding = "INSERT INTO vizsearch (filename, embedding) VALUES ('{filename}', '{embedding}');"
 
+# Ingest CNN Embeddings
 for ix, (filename, embedding) in enumerate(cat_dogs_embeddings.items()):
     embedding = embedding.numpy().squeeze().tolist()
     sql_ = sql_insert_vector_embedding.format(filename=filename, embedding=embedding)

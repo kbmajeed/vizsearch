@@ -1,15 +1,13 @@
-import os
-import datetime
 import logging
 import pickle
 import warnings
 
 import keras
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
-from utils import initialize
 from etl.data_prep import cat_dogs_dataset, tensor_transform
+from utils import initialize
 
 
 initialize.load_logging()
@@ -43,7 +41,6 @@ def model_infer(index,
         plt.imshow(test_img.squeeze())
         plt.show()
 
-    #model_embedding = keras.Model(inputs=model.input, outputs=model.layers[8].output)
     model_embedding = keras.Model(inputs=model.input, outputs=model.get_layer('Dense_1').output)
     embedding_vector = model_embedding(test_img)
 
@@ -59,17 +56,12 @@ def model_get_embedding(n_samples,
     for index in range(n_samples):
         test_img = np.array([tensor_transform(cat_dogs_dataset[index][0])])
         test_name = dataset.img_listing[index]
-        #model_embedding = keras.Model(inputs=test_model.input, outputs=test_model.layers[8].output)
         model_embedding = keras.Model(inputs=test_model.input, outputs=test_model.get_layer('Dense_1').output)
         embedding_vector = model_embedding(test_img)
         embedding_matrix[test_name] = embedding_vector
         logging.info(f"Extracting embedding {index} for : {test_name} => Tensor{embedding_vector.shape}")
 
     return embedding_matrix
-
-
-# favorite_color = pickle.load(open("save.p", "rb"))
-# # favorite_color is now {"lion": "yellow", "kitty": "red"}
 
 
 if __name__ == '__main__':

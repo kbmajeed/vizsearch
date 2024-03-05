@@ -1,18 +1,11 @@
-import os
-import math
 import datetime
 import logging
-import warnings
 
 import torch
 import torch.nn as nn
 from torch.optim import SGD
 from torch.utils.data import Dataset
-from torchvision import transforms
-from torchvision.io import read_image
-from torchvision.transforms.v2 import Resize
 
-from utils import initialize
 from etl.data_prep import cat_dogs_dataset
 
 
@@ -45,7 +38,6 @@ def train(n_epochs, optimizer, model, loss_fn, train_loader):
         loss_train = 0.0
 
         for ix, (imgs, labels) in enumerate(train_loader):
-            #print(f'Label _n: {len(labels)}')
             outputs = model(imgs)
             loss = loss_fn(outputs, labels)
             optimizer.zero_grad()
@@ -53,16 +45,8 @@ def train(n_epochs, optimizer, model, loss_fn, train_loader):
             optimizer.step()
             loss_train += loss.item()
 
-            #if epoch == 1 or epoch % 10 == 0:
         print(f'{datetime.datetime.now()} | Epoch: {epoch}, Training loss: {loss_train/len(train_loader)}')
     pass
-
-
-# train(n_epochs=100,
-#       optimizer=optimizer,
-#       model=model,
-#       loss_fn=loss_fn,
-#       train_loader=dataset_loader)
 
 
 if __name__ == '__main__':

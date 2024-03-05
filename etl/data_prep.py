@@ -1,6 +1,6 @@
-import os
-import math
 import logging
+import math
+import os
 import warnings
 
 import numpy as np
@@ -128,15 +128,3 @@ img_transforms = transforms.Compose([
 
 cat_dogs_dataset = CatsDogsDataset(config.dataset.dataset_path, transform=img_transforms)
 logging.info("cat_dogs image dataset created")
-
-# def save_keras_dataset():
-#     pass
-#
-# def get_keras_dataset(dataset=cat_dogs_dataset, use_raw=False):
-#     if use_raw:
-#         train_images = np.array([tensor_transform(img_i) for img_i, _ in dataset])
-#         train_labels = np.array([img_l.numpy().flatten() for _, img_l in dataset])
-#     else:
-#         #load from saved dataset
-#     logging.info('Training images and labels extracted for model fitting')
-#     pass

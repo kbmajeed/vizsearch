@@ -1,12 +1,12 @@
 import os
 import pickle
-import psycopg2
-import logging
 import warnings
-import matplotlib.pyplot as plt
 
-import imageio.v3 as iio
 import dotenv
+import imageio.v3 as iio
+import matplotlib.pyplot as plt
+import psycopg2
+
 from utils import initialize
 
 
@@ -42,7 +42,6 @@ for item in range(len(result)):
     im = iio.imread(img_dir)
     plt.imshow(im)
     plt.show()
-
 
 if __name__ == '__main__':
     print(0)

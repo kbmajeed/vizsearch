@@ -3,15 +3,15 @@ import datetime
 import logging
 import warnings
 
-import numpy as np
 import matplotlib.pyplot as plt
-
-from utils import initialize
-from etl.data_prep import cat_dogs_dataset, tensor_transform
+import numpy as np
 
 from keras import layers
 from keras import models
 from keras import optimizers
+
+from utils import initialize
+from etl.data_prep import cat_dogs_dataset, tensor_transform
 
 
 initialize.load_logging()
@@ -24,12 +24,6 @@ img_input_dim = (config.etl.image_resize, config.etl.image_resize, 3)
 model = models.Sequential()
 model.add(layers.Conv2D(8, (3, 3), activation='relu', input_shape=img_input_dim, name='Conv2D_1'))
 model.add(layers.MaxPooling2D((2, 2), name='MaxPooling2D_1'))
-# model.add(layers.Conv2D(64, (3, 3), activation='relu', name='Conv2D_2'))
-# model.add(layers.MaxPooling2D((2, 2), name='MaxPooling2D_2'))
-# model.add(layers.Conv2D(128, (3, 3), activation='relu', name='Conv2D_3'))
-# model.add(layers.MaxPooling2D((2, 2), name='MaxPooling2D_3'))
-# model.add(layers.Conv2D(128, (3, 3), activation='relu', name='Conv2D_4'))
-# model.add(layers.MaxPooling2D((2, 2), name='MaxPooling2D_4'))
 model.add(layers.Flatten(name='Flatten_1'))
 model.add(layers.Dense(16, activation='relu', name='Dense_1'))
 model.add(layers.Dense(1, activation='sigmoid', name='Dense_2'))
