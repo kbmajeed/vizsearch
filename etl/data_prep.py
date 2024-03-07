@@ -15,6 +15,9 @@ from torchvision.transforms.v2 import Resize
 from utils import initialize
 
 
+logger = logging.getLogger(__name__)
+
+
 # Load config files and env variables
 config = initialize.load_config()
 warnings.filterwarnings("ignore")
@@ -127,4 +130,4 @@ img_transforms = transforms.Compose([
 ])
 
 cat_dogs_dataset = CatsDogsDataset(config.dataset.dataset_path, transform=img_transforms)
-logging.info("cat_dogs image dataset created")
+logger.info("cat_dogs image dataset created")

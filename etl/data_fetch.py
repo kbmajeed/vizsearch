@@ -4,6 +4,7 @@ import warnings
 
 import boto3
 import botocore
+import dotenv
 
 from utils import initialize
 
@@ -12,7 +13,7 @@ from utils import initialize
 initialize.load_logging()
 config = initialize.load_config()
 warnings.filterwarnings("ignore")
-
+dotenv.load_dotenv()
 
 def fetch_raw_datafiles_from_s3():
     """

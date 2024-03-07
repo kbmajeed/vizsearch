@@ -1,33 +1,47 @@
-# vizsearch
-Visual search engine is a practical implementation of an image retrieval system using visual embeddings from a deep learning computer vision model and a retrieval system leveraging vector databases.
+# Vizsearch
+Visual search engine is an implementation of an image retrieval system using visual embeddings from a deep learning 
+computer vision model and a retrieval system leveraging vector databases.
 
-## Description
 
 ## Implementation
+- Large Dataset
+- CNN Model
+- Vector Embeddings
+- Vector Database
+- Retrieval App
 
-## Setup
-### Local Installation
-1. Install Postgres, Pgvector
+## Why?
+- Cuts across favourite topics
+- Vector DBs and LLMs
+- Neural Embeddings
 
-Tool Usage So far:
+## Challenges
+- Not enough data
+- Uneven data shape/size
+- Training hyperparameters
+- PgVectors vs Pinecone
 
-PgAdmin
-PostgresSQL
-Pgvector
+## Changes
+- Bigger dataset
+- Multimodal
+- Optimization
+- Use OOP
+- Apply a UI
 
-Yaml
-DotEnv
+## 
 
-AWS IAM
-AWS S3
 
-Boto3
+## Tooling
+- Postgres
+- Pgvector
+- Pincone
+- AWS S3
+- AWS IAM
+- PgAdmin
+- Pycharm
 
-Pip
-
-Box
-Datetime
-
-Pycharm
-Logging
-Config
+## Libraries
+- Yaml
+- DotEnv
+- Boto3
+- Box

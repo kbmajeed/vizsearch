@@ -41,11 +41,11 @@ def load_logging(logging_main_path: str = '../logs/') -> None:
     :return:
     """
 
-    log_full_path = os.path.join(logging_main_path, 'vizsearch.log')
+    log_full_path = os.path.join(logging_main_path, 'vizsearch_.log')
     logging.basicConfig(
         filename=log_full_path,
         filemode='w',
-        encoding='utf-8',
+        #encoding='utf-8',
         format="%(asctime)s - %(levelname)s - [%(filename)s: %(funcName)22s(): %(lineno)s]  -  %(message)s",
         level=logging.INFO,
         force=True,
